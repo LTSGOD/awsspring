@@ -1,7 +1,12 @@
 package org.example.awsspring.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.example.awsspring.domain.posts.Posts;
 import org.example.awsspring.domain.posts.PostsRepository;
+import org.example.awsspring.web.dto.PostsListResponseDto;
 import org.example.awsspring.web.dto.PostsResponseDto;
 import org.example.awsspring.web.dto.PostsSaveRequestDto;
 import org.example.awsspring.web.dto.PostsUpdateRequestDto;
@@ -35,5 +40,19 @@ public class PostsService {
 		Posts entity = postsRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
 		return new PostsResponseDto(entity);
+	}
+
+	@Transactional(readOnly = true)
+	public List<PostsListResponseDto> findAllDesc(){
+		return postsRepository.findAllDesc().stream()
+			.map(PostsListResponseDto::new)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional
+	public void delete(Long id){
+		Posts posts = postsRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+		postsRepository.delete(posts);
 	}
 }
