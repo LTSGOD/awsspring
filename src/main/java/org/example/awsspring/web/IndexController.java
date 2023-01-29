@@ -1,5 +1,10 @@
 package org.example.awsspring.web;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
+import org.example.awsspring.config.auth.LoginUser;
+import org.example.awsspring.config.auth.dto.SessionUser;
 import org.example.awsspring.service.PostsService;
 import org.example.awsspring.web.dto.PostsResponseDto;
 import org.springframework.stereotype.Controller;
@@ -15,10 +20,15 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 
 	private final PostsService postsService;
+	private final HttpSession httpSesson;
 
 	@GetMapping("/")
-	public String index(Model model){
+	public String index(Model model, @LoginUser SessionUser user){
 		model.addAttribute("posts",postsService.findAllDesc());
+
+		if(user!=null){
+			model.addAttribute("userName",user.getName());
+		}
 		return "index";
 	}
 
