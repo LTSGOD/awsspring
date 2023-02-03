@@ -32,13 +32,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-		String registrationId = userRequest.getClientRegistration().getRegistrationId();
+		String registrationId = userRequest.getClientRegistration().getRegistrationId();//네이버, 구글 구분
+
 		String userNameAttributeName = userRequest.getClientRegistration()
 			.getProviderDetails()
 			.getUserInfoEndpoint()
 			.getUserNameAttributeName();
+		//로그인 진행시 키가 되는 필드값 pk와 같음.
 
-		OAuthAttributes attributes  = OAuthAttributes.of(registrationId, userNameAttributeName,oAuth2User.getAttributes());
+		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName,oAuth2User.getAttributes());
 
 		User user = saveOrUpdate(attributes);
 
