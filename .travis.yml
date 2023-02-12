@@ -6,7 +6,7 @@ branches:
   only:
     - main
 
-# Travis CI 서버의 Home zx
+# Travis CI 서버의 Home
 cache:
   directories:
     - '$Home/.m2/repository'
