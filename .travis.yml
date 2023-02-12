@@ -18,12 +18,12 @@ script: "./gradlew clean build"
 
 before_deploy:
   - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성 z
+  - cp build/libs/*.jar before-deploy/ # 배포에 필요한 파일만 꼽아서 복사 (스크립트 + appspec.yml + executable jar)
   - cp scripts/*.sh before-deploy/
   - cp appspec.yml before-deploy/
-  - cp build/libs/*.jar before-deploy/
-  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동후 전체 압축
-  - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동후 deploy 디렉토리 생성
-  - mv before-deploy/before-deploy.zip deploy/freelec-springboot2-webservice.zip # deploy로 zip파일 이동
+  - cd before-deploy && zip -r smartnotice * # 위치 이동 후 내부 파일 전체 압축
+  - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동 후 deploy 디렉토리 생성
+  - mv before-deploy/before-deploy.zip deploy/freelec-springboot2-webservice.zip # 파일 위치 옮기기
 
 deploy:
   - provider: s3
