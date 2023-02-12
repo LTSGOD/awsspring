@@ -31,6 +31,8 @@ deploy:
     acl: private #zip 파일 접근을 private
     local_dir: deploy #before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
+    on:
+      branch: main #해당 라인 추가
 
 #CI 실행 ㅗ안료시 메일로 알람
 notifications:
