@@ -51,7 +51,7 @@ deploy:
     deployment_group: springboot2-webservice-group
 
     region: ap-northeast-2
-    wait_until-deployed: true
+    wait-until-deployed: true
     on:
       branch: main #해당 라인 추가
 
